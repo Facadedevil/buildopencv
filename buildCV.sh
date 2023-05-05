@@ -9,7 +9,7 @@
 # -------------------------------------------------------------------- |
 #                       SCRIPT OPTIONS                                 |
 # ---------------------------------------------------------------------|
-OPENCV_VERSION='4.6.0'       # Version to be installed
+OPENCV_VERSION='4.7.0'       # Version to be installed
 OPENCV_CONTRIB='YES'          # Install OpenCV's extra modules (YES/NO)
 # -------------------------------------------------------------------- |
 
@@ -17,7 +17,13 @@ OPENCV_CONTRIB='YES'          # Install OpenCV's extra modules (YES/NO)
 # |------------------------------------------------------|
 # | OS               | OpenCV       | Test | Last test   |
 # |------------------|--------------|------|-------------|
+# | Ubuntu 22.04 LTS | OpenCV 4.7.0 | OK   | 06 Feb 2023 |
+# |------------------|--------------|------|-------------|
 # | Ubuntu 22.04 LTS | OpenCV 4.6.0 | OK   | 04 Oct 2022 |
+# |------------------|--------------|------|-------------|
+# | Ubuntu 20.04 LTS | OpenCV 4.7.0 | OK   | 11 Mar 2023 |
+# |------------------|--------------|------|-------------|
+# | Ubuntu 20.04 LTS | OpenCV 4.6.0 | OK   | 17 Dec 2022 |
 # |------------------|--------------|------|-------------|
 # | Ubuntu 20.04 LTS | OpenCV 4.5.4 | OK   | 10 Dec 2021 |
 # |------------------|--------------|------|-------------|
@@ -25,9 +31,6 @@ OPENCV_CONTRIB='YES'          # Install OpenCV's extra modules (YES/NO)
 # |----------------------------------------------------- |
 # | Ubuntu 20.04 LTS | OpenCV 4.2.0 | OK   | 25 Apr 2020 |
 # |----------------------------------------------------- |
-# | Debian 10.2      | OpenCV 4.2.0 | OK   | 26 Dec 2019 |
-# |----------------------------------------------------- |
-# | Debian 10.1      | OpenCV 4.1.1 | OK   | 28 Sep 2019 |
 
 
 # 1. KEEP UBUNTU OR DEBIAN UP TO DATE
@@ -40,43 +43,43 @@ sudo apt-get -y autoremove    # Uncomment to remove packages that are now no lon
 # 2. INSTALL THE DEPENDENCIES
 
 # Build tools:
-sudo apt install build-essential cmake pkg-config unzip yasm git checkinstall
+sudo apt install -y build-essential cmake pkg-config unzip yasm git checkinstall
 
 # GUI (if you want GTK, change 'qt5-default' to 'libgtkglext1-dev' and remove '-DWITH_QT=ON'):
 sudo apt-get install libgtk-3-dev
 
 # Image I/O libs
-sudo apt install libjpeg-dev libpng-dev libtiff-dev
+sudo apt install -y libjpeg-dev libpng-dev libtiff-dev
 
 # Video/Audio Libs - FFMPEG, GSTREAMER, x264 etc:
-sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev
-sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
-sudo apt-get install libxvidcore-dev x264 libx264-dev libfaac-dev libmp3lame-dev libtheora-dev
-sudo apt-get install libfaac-dev libvorbis-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+sudo apt-get install -y libxvidcore-dev x264 libx264-dev libfaac-dev libmp3lame-dev libtheora-dev
+sudo apt-get install -y libfaac-dev libvorbis-dev
 
 # OpenCore - Adaptive Multi Rate Narrow Band (AMRNB) and Wide Band (AMRWB) speech codec:
-sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev
+sudo apt-get install -y libopencore-amrnb-dev libopencore-amrwb-dev
 
 # Parallelism library C++ for CPU
-sudo apt-get install libtbb-dev
+sudo apt-get install -y libtbb-dev
 
 # Python libraries for python3:
 sudo apt-get install python3-dev python3-pip
 sudo -H pip3 install -U pip numpy
-sudo apt install python3-testresources
+sudo apt install -y python3-testresources
 
 # Optimization libraries for OpenCV
-sudo apt-get install libatlas-base-dev gfortran
+sudo apt-get install -y libatlas-base-dev gfortran
 
 # Optional libraries:
-sudo apt-get install libprotobuf-dev protobuf-compiler
-sudo apt-get install libgoogle-glog-dev libgflags-dev
-sudo apt-get install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
-sudo apt-get install libgtkglext1 libgtkglext1-dev
-sudo apt-get install libopenblas-dev liblapacke-dev libva-dev libopenjp2-tools libopenjpip-dec-server libopenjpip-server libqt5opengl5-dev libtesseract-dev 
+sudo apt-get install -y libprotobuf-dev protobuf-compiler
+sudo apt-get install -y libgoogle-glog-dev libgflags-dev
+sudo apt-get install -y libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
+sudo apt-get install -y libgtkglext1 libgtkglext1-dev
+sudo apt-get install -y libopenblas-dev liblapacke-dev libva-dev libopenjp2-tools libopenjpip-dec-server libopenjpip-server libqt5opengl5-dev libtesseract-dev 
 
 # Install Ceres Solver
-sudo apt-get install cmake libeigen3-dev libgflags-dev libgoogle-glog-dev libsuitesparse-dev libatlas-base-dev libmetis-dev
+sudo apt-get install -y cmake libeigen3-dev libgflags-dev libgoogle-glog-dev libsuitesparse-dev libatlas-base-dev libmetis-dev
 
  git clone https://github.com/darkratio/ceres-solver.git
  cd ceres-solver && mkdir build && cd build
@@ -88,13 +91,12 @@ sudo apt-get install cmake libeigen3-dev libgflags-dev libgoogle-glog-dev libsui
 
 # Download OpenCV and OpenCV Contrib. In June 2022, the 4.6.0 release didn’t include the fix to compile properly with the latest Ceres release. Cloning and building 4.6.0-dev from the repos includes the fix. Future OpenCV releases shouldn’t have this issue.
 
-#wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip
-#unzip ${OPENCV_VERSION}.zip && rm ${OPENCV_VERSION}.zip
-#mv opencv-${OPENCV_VERSION} OpenCV
 cd ../../
-git clone https://github.com/opencv/opencv.git
-cd opencv
-git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+wget https://github.com/Facadedevil/buildopencv/releases/download/opencv/opencv.zip
+unzip opencv.zip && rm opencv.zip
+#git clone https://github.com/opencv/opencv.git
+#cd opencv
+#git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
 
 if [ $OPENCV_CONTRIB = 'YES' ]; then
   #wget https://github.com/opencv/opencv_contrib/archive/refs/heads/4.x.zip
@@ -102,8 +104,10 @@ if [ $OPENCV_CONTRIB = 'YES' ]; then
   #mv opencv_contrib-4.x opencv_contrib
   echo "Installing opencv_contrib"
   cd ../
-  git clone https://github.com/opencv/opencv_contrib.git
-  cd opencv_contrib
+  wget https://github.com/Facadedevil/buildopencv/releases/download/opencv_contrib/opencv_contrib.zip
+  unzip opencv_contrib.zip && rm opencv_contrib.zip
+  #git clone https://github.com/opencv/opencv_contrib.git
+  #cd opencv_contrib
   #git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
 fi
 
@@ -147,12 +151,12 @@ time cmake -D CMAKE_BUILD_TYPE=RELEASE \
 	-D WITH_TBB=ON \
 	-D OPENCV_ENABLE_NONFREE=ON \
 	-D WITH_CUDA=ON \
-	-D WITH_FFMPEFG=ON
+	-D WITH_FFMPEFG=ON \
 	-D WITH_CUDNN=ON \
 	-D OPENCV_DNN_CUDA=ON \
 	-D ENABLE_FAST_MATH=1 \
 	-D CUDA_FAST_MATH=1 \
-	-D CUDA_ARCH_BIN=7.5 \
+	-D CUDA_ARCH_BIN=8.6 \
 	-D WITH_CUBLAS=1 \
 	-D WITH_OPENGL=ON \
 	-D WITH_QT=ON \
