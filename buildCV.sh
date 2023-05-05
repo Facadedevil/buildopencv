@@ -223,6 +223,12 @@ else
    exit 1
 fi
 
+# Add PYTHON ENVIRONMENT PATH
+PYTHON_VERSION=`ls /usr/local/lib | grep python3`
+echo "# SETTING PYTHON Site-packages path to ENVIRONMENT" >> ~/.bashrc
+echo "export PYTHONPATH=/usr/local/lib/$PYTHON_VERSION/site-packages:\$PYTHONPATH" >> ~/.bashrc
+source ~/.bashrc
+
 # check installation
 IMPORT_CHECK="$(python3 -c "import cv2 ; print(cv2.__version__)")"
 if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
