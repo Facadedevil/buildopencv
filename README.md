@@ -5,7 +5,7 @@
 # Building for:
 
 * Ubuntu-20.04, 22.04
-* OpenCV 4.2.0- 4.6.0
+* OpenCV 4.2.0- 4.7.0
 
 ## Packaging Option ( Builds package by default; --no\_package does not build package)
 
