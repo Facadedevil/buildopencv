@@ -109,9 +109,19 @@ if [ $OPENCV_CONTRIB = 'YES' ]; then
   #git clone https://github.com/opencv/opencv_contrib.git
   #cd opencv_contrib
   #git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+  
+  # sed -i -e "552s/SetParameterization/SetManifold/" modules/sfm/src/libmv_light/libmv/simple_pipeline/bundle.cc
+  
+  
+  # If the issue show up and then uncomment the below line.
+  # ISSUE: "DIFFERENT_SIZES_EXTRA" was not declared in this scope; did you mean "DIFFERENT_SIZES"? 
+  
+  # sed -i -e "s/DIFFERENT_SIZES_EXTRA/DIFFERENT_SIZES/" modules/cudawarping/test/test_remap.cpp
 fi
 
-cd ../opencv && mkdir build && cd build
+cd ../opencv
+rm -r build
+mkdir build && cd build
 
 # Build and Install OpenCV
 
