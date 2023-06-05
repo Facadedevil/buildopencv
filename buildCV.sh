@@ -229,7 +229,7 @@ echo "# SETTING PYTHON Site-packages path to ENVIRONMENT" >> ~/.bashrc
 echo "export PYTHONPATH=/usr/local/lib/$PYTHON_VERSION/site-packages:\$PYTHONPATH" >> ~/.bashrc
 
 # For Jetson
-#echo "export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1"
+#echo "export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1" >> ~/.bashrc
 
 source ~/.bashrc
 
