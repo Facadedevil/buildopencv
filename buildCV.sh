@@ -92,7 +92,7 @@ sudo apt-get install -y cmake libeigen3-dev libgflags-dev libgoogle-glog-dev lib
 # Download OpenCV and OpenCV Contrib. In June 2022, the 4.6.0 release didn’t include the fix to compile properly with the latest Ceres release. Cloning and building 4.6.0-dev from the repos includes the fix. Future OpenCV releases shouldn’t have this issue.
 
 cd ../../
-wget https://github.com/Facadedevil/buildopencv/releases/download/opencv/opencv.zip
+wget https://github.com/Facadedevil/buildopencv/releases/download/opencv_contrib/opencv.zip
 unzip opencv.zip && rm opencv.zip
 #git clone https://github.com/opencv/opencv.git
 #cd opencv
@@ -227,6 +227,10 @@ fi
 PYTHON_VERSION=`ls /usr/local/lib | grep python3`
 echo "# SETTING PYTHON Site-packages path to ENVIRONMENT" >> ~/.bashrc
 echo "export PYTHONPATH=/usr/local/lib/$PYTHON_VERSION/site-packages:\$PYTHONPATH" >> ~/.bashrc
+
+# For Jetson
+#echo "export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1"
+
 source ~/.bashrc
 
 # check installation
