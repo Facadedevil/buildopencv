@@ -46,7 +46,7 @@ sudo apt-get -y autoremove    # Uncomment to remove packages that are now no lon
 sudo apt install -y build-essential cmake pkg-config unzip yasm git checkinstall
 
 # GUI (if you want GTK, change 'qt5-default' to 'libgtkglext1-dev' and remove '-DWITH_QT=ON'):
-sudo apt-get install libgtk-3-dev
+sudo apt-get install -y libgtk-3-dev
 
 # Image I/O libs
 sudo apt install -y libjpeg-dev libpng-dev libtiff-dev
@@ -64,7 +64,7 @@ sudo apt-get install -y libopencore-amrnb-dev libopencore-amrwb-dev
 sudo apt-get install -y libtbb-dev
 
 # Python libraries for python3:
-sudo apt-get install python3-dev python3-pip
+sudo apt-get install -y python3-dev python3-pip
 sudo -H pip3 install -U pip numpy
 sudo apt install -y python3-testresources
 
@@ -215,6 +215,10 @@ fi
 
 echo "Installing ... "
 sudo make install
+
+sudo cp -r /usr/local/lib/python3*/site-packages/cv2 /usr/local/lib/python3*/dist-packages/
+sudo mv /usr/local/lib/python3*/dist-packages/cv2/python-3*/cv2.*.so /usr/local/lib/python3*/dist-packages/cv2/python-3*/cv2.so
+
 if [ $? -eq 0 ] ; then
    echo "OpenCV installed in: $CMAKE_INSTALL_PREFIX"
    sudo ldconfig
